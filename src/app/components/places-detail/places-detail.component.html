@@ -1,0 +1,46 @@
+<!--
+  Inspired on:
+  https://www.lonelyplanet.com/england/london/nightlife/a/poi-dri/358914
+  https://www.lonelyplanet.com/england/london/nightlife/roof-gardens/a/poi-dri/1280266/358914
+-->
+
+
+<main *ngFor="let poi of pois">
+
+  <div class="grid-container">
+    <header class="grid-x grid-padding-x">
+      <h1 class="large-12 cell page__title">{{ poi.name}}</h1>
+    </header>
+  </div>
+
+  <div class="grid-container">
+    <div class="grid-x grid-padding-x">
+      <div class="large-8 cell">
+        <p>
+          {{ poi.description }}
+        </p>
+
+        <app-places-form [detail]="poi" (edit)="handleEdit($event)" (remove)="handleRemove($event)"></app-places-form>
+
+      </div>
+
+      <aside class="large-4 cell">
+        <h3>Address</h3>
+        <address>
+          {{ poi.address }}
+          <br> 1000 Brussels
+        </address>
+
+        <agm-map [latitude]="poi.lat" [longitude]="poi.long" [zoom]="14" [className]="'map__aside'">
+          <agm-marker [latitude]="poi.lat" [longitude]="poi.long">
+            <agm-info-window>
+              {{ poi.name}}
+            </agm-info-window>
+          </agm-marker>
+        </agm-map>
+
+      </aside>
+    </div>
+  </div>
+
+</main>

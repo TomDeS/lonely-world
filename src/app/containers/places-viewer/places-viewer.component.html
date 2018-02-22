@@ -1,0 +1,67 @@
+<main>
+  <div class="grid-container">
+    <nav class="grid-x grid-margin-x">
+      <ul class="menu align-center small-6 small-offset-3 filternav">
+        <li *ngFor="let term of terms">
+          <a [routerLink]="['/filter/', term.key]">
+            {{ term.value }}
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+
+  <aside>
+    <agm-map [latitude]="defaultMapLat" [longitude]="defaultMapLng" [zoom]="14" [className]="'map__main'">
+      <agm-marker *ngFor='let place of poi$ | async' [latitude]="place.lat" [longitude]="place.long">
+        <agm-info-window>
+          <h3>{{ place.name}}</h3>
+          <p>
+            {{ (place.description.length > 216) ? (place.description | slice:0:216)+'...':(place.description) }}
+          </p>
+          <p>
+            <a routerLink='/detail/{{place.slug}}'>
+              Read more...
+            </a>
+          </p>
+        </agm-info-window>
+      </agm-marker>
+    </agm-map>
+  </aside>
+
+
+  <div class="articles">
+    <div class="grid-container">
+      <div class="grid-x grid-margin-x">
+        <article *ngFor="let place of poi$ | async " class="small-6 small-offset-3 cell listitem">
+          <a routerLink='/detail/{{place.slug}}'>
+            <footer>
+              <span class="topchoice">{{!!place.top ? 'Top Choice' : ''}}</span>
+              <span class="category">{{place.category}} </span>
+            </footer>
+            <header>
+              <h2>{{place.name}}</h2>
+            </header>
+            <p>
+              {{ (place.description.length > 216) ? (place.description | slice:0:216)+'...':(place.description) }}
+            </p>
+          </a>
+        </article>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="(poi$ | async)?.length === 0">
+    <div class="grid-container">
+      <div class="grid-x grid-margin-x">
+        <div class="small-6 small-offset-3 cell">
+          <h1>No results</h1>
+          <p>
+            No places where found. You could
+            <a [routerLink]="['/dashboard']">add one</a> if you'd like.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>

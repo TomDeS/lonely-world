@@ -1,0 +1,117 @@
+<div class="grid-container">
+  <div class="grid-x grid-padding-x">
+    <div class="large-12 cell">
+
+      <div *ngIf="detail?.name" class="callout">
+        <h4>
+          <strong>Please note</strong>
+        </h4>
+        <p>
+          This form has been converted (last minute) from a template driven one to a reactive form. Reason for this is a reload problem
+          which turned out to be a json-server problem. This means that:
+        </p>
+        <ul>
+          <li>Submit doesn't work, functionallity hasn't been implemented.</li>
+          <li>Default values are placed in
+            <code>places-form.component.html</code> instead of
+            <code>places-form.component.ts</code>
+          </li>
+          <li>Category isn't (always) selected by default.</li>
+        </ul>
+        Thank you kindly for your understanding.
+      </div>
+
+      <form [formGroup]="placesForm" (ngSubmit)="handleSubmit($event)">
+        <label for="name">
+          Name:
+          <input type="text" id="name" formControlName="name" [ngModel]="detail?.name">
+        </label>
+
+        <label for="category">
+          Category:
+        </label>
+        <select id="category" formControlName="category" [ngModel]="detail?.name">
+          <option *ngFor="let term of terms" [value]="term.key">
+            {{term.key}} - {{term.value}}
+          </option>
+        </select>
+
+        <label for="address">
+          Street + nr
+          <input type="text" id="address" formControlName="address" [ngModel]="detail?.address">
+        </label>
+
+        <label for="description">
+          Description:
+          <textarea id="description" name="description" cols="3" rows="5" formControlName="description" [ngModel]="detail?.description">
+          </textarea>
+        </label>
+
+        <label for="top">
+          Top choice?
+          <input type="radio" formControlName="top" id="top" [value]="true" [checked]="detail?.top === true"> True
+          <input type="radio" formControlName="top" id="top" [value]="false" [checked]="detail?.top === false"> False
+        </label>
+
+        <button class="button" type="submit">Submit</button>
+      </form>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+  <!--
+    Below is what used to be the template driven form
+    ==================================================
+   -->
+  <!--
+
+<form (ngSubmit)="handleSubmit(form.value, form.valid)" #form="ngForm" novalidate>
+  <label for="name">
+    Name:
+    <input type="text" id="name" name="name" required #name="ngModel" [ngModel]="detail?.name">
+  </label>
+
+  <div>
+    <label for="category">
+      Category:
+    </label>
+    <select id="category" name="category" #category="ngModel" [ngModel]="detail?.category">
+      <option *ngFor="let term of terms" [value]="term.key" [selected]="term.value === detail?.category">
+        {{term.value}}
+      </option>
+    </select>
+  </div>
+
+  <label for="address">
+    Street + nr
+    <input type="text" id="address" name="address" required #address="ngModel" [ngModel]="detail?.address">
+  </label>
+
+  <label for="description">
+    Description:
+    <textarea id="description" name="description" required #description="ngModel" [ngModel]="detail?.description">
+
+    </textarea>
+  </label>
+
+  <label for="top">
+    Top choice?
+    <input type="checkbox" id="top" name="top" #top="ngModel" [ngModel]="detail?.top">
+  </label>
+
+  <button type="submit">
+    Add place
+  </button>
+
+</form>
+
+-->

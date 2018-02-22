@@ -1,0 +1,10 @@
+{
+  "/pois": {
+    "target": "http://localhost:3000",
+    "secure": false
+  },
+  "/terms": {
+    "target": "http://localhost:3000",
+    "secure": false
+  }
+}
